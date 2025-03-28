@@ -1,0 +1,226 @@
+/* Shimmer Effect */
+.shimmer {
+  @apply relative overflow-hidden;
+}
+
+.shimmer::before {
+  @apply absolute top-0 left-[-100%] w-full h-full;
+  content: '';
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(200%);
+  }
+}
+
+/* Pulse Animation */
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Pop Effect */
+.pop-on-hover {
+  @apply transition-transform duration-200 ease-in-out;
+}
+
+.pop-on-hover:hover {
+  @apply scale-105;
+}
+
+/* Glow Effect */
+.glow-on-hover {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.glow-on-hover:hover {
+  @apply shadow-lg -translate-y-0.5;
+}
+
+/* Button Press Effect */
+.press-effect {
+  @apply transition-transform duration-100 ease-in-out;
+}
+
+.press-effect:active {
+  @apply scale-95;
+}
+
+/* Slide-in Animation */
+.slide-in {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    @apply opacity-0 translate-y-5;
+  }
+  to {
+    @apply opacity-100 translate-y-0;
+  }
+}
+
+/* Fade Effect for Page Transitions */
+.fade-enter {
+  @apply opacity-0;
+}
+
+.fade-enter-active {
+  @apply opacity-100 transition-opacity duration-300;
+}
+
+.fade-exit {
+  @apply opacity-100;
+}
+
+.fade-exit-active {
+  @apply opacity-0 transition-opacity duration-300;
+}
+
+/* Card hover effects */
+.card-hover {
+  @apply transition-all duration-300 ease-in-out origin-center;
+}
+
+.card-hover:hover {
+  @apply -translate-y-1 shadow-lg;
+}
+
+/* Floating animation */
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Gradient shift animation for cards */
+.gradient-shift {
+  @apply bg-[length:200%_200%];
+  animation: gradient-position 15s ease infinite;
+}
+
+@keyframes gradient-position {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Subtle scale effect */
+.scale-hover {
+  @apply transition-transform duration-300 ease-in-out;
+}
+
+.scale-hover:hover {
+  @apply scale-[1.02];
+}
+
+/* Glow pulse effect */
+.glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+/* Arrow bounce animation */
+.arrow-bounce {
+  animation: arrow-bounce 2s infinite;
+}
+
+@keyframes arrow-bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateX(0); }
+  40% { transform: translateX(-5px); }
+  60% { transform: translateX(5px); }
+}
+
+/* Text underline animation */
+.animate-underline {
+  @apply relative;
+}
+
+.animate-underline::after {
+  @apply absolute w-0 h-0.5 -bottom-0.5 left-0 bg-current transition-[width] duration-300 ease-in-out;
+  content: '';
+}
+
+.animate-underline:hover::after {
+  @apply w-full;
+}
+
+/* Card background pulse */
+.bg-pulse {
+  animation: bg-pulse 3s ease-in-out infinite;
+}
+
+@keyframes bg-pulse {
+  0%, 100% { @apply bg-opacity-70; }
+  50% { @apply bg-opacity-90; }
+}
+
+/* Tilt effect */
+.tilt-card {
+  @apply transition-transform duration-300 ease-in-out;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.tilt-card:hover {
+  transform: rotateX(5deg) rotateY(5deg);
+}
+
+/* Blur in animation */
+.blur-in {
+  animation: blur-in 0.5s ease-out forwards;
+}
+
+@keyframes blur-in {
+  0% {
+    @apply opacity-0 blur-lg;
+  }
+  100% {
+    @apply opacity-100 blur-none;
+  }
+}
+
+/* Badge ping animation */
+.badge-ping {
+  @apply relative;
+}
+
+.badge-ping::after {
+  @apply absolute -top-1 -right-1 w-3 h-3 rounded-full bg-red-500;
+  content: '';
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  0% {
+    @apply transform scale-100 opacity-100;
+  }
+  75%, 100% {
+    @apply transform scale-150 opacity-0;
+  }
+}

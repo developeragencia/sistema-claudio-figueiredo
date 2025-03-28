@@ -1,0 +1,12 @@
+
+/* Import base styles and Tailwind directives */
+@import './base.css';
+
+/* Import animations */
+@import './animations.css';
+
+/* Import UI effects */
+@import './ui-effects.css';
+
+/* Import gradients */
+@import './gradients.css';

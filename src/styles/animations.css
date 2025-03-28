@@ -1,0 +1,182 @@
+@layer utilities {
+  /* Floating animations for maintenance page */
+  .animate-float-slow {
+    animation: float 8s ease-in-out infinite;
+  }
+  
+  .animate-float-medium {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-fast {
+    animation: float 4s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  
+  /* Fly animation for logo - with will-change optimization */
+  .animate-fly-to-dashboard {
+    will-change: transform, opacity;
+    animation: fly-to-dashboard 2s forwards ease-in-out;
+  }
+  
+  @keyframes fly-to-dashboard {
+    0% {
+      transform: scale(1) translateY(0) translateX(0);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(0.5) translateY(-40px) translateX(40px);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(0.2) translateY(-100px) translateX(100px);
+      opacity: 0;
+    }
+  }
+  
+  .animate-return-from-dashboard {
+    will-change: transform, opacity;
+    animation: return-from-dashboard 1s forwards ease-in-out;
+  }
+  
+  @keyframes return-from-dashboard {
+    0% {
+      transform: scale(0.2) translateY(-100px) translateX(100px);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(0.5) translateY(-40px) translateX(40px);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1) translateY(0) translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .logo-float {
+    will-change: transform;
+    animation: logo-float 2s ease-in-out infinite;
+  }
+  
+  @keyframes logo-float {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  /* Novas animações para o logo */
+  .logo-glow {
+    will-change: filter;
+    animation: logo-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes logo-glow {
+    0% {
+      filter: drop-shadow(0 0 2px var(--glow-color));
+    }
+    50% {
+      filter: drop-shadow(0 0 10px var(--glow-color));
+    }
+    100% {
+      filter: drop-shadow(0 0 2px var(--glow-color));
+    }
+  }
+
+  .logo-pulse {
+    will-change: transform;
+    animation: logo-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes logo-pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .logo-rotate {
+    will-change: transform;
+    animation: logo-rotate 20s linear infinite;
+  }
+
+  @keyframes logo-rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .logo-bounce {
+    will-change: transform;
+    animation: logo-bounce 1s ease-in-out infinite;
+  }
+
+  @keyframes logo-bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .logo-shake {
+    will-change: transform;
+    animation: logo-shake 0.5s ease-in-out;
+  }
+
+  @keyframes logo-shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    75% {
+      transform: translateX(5px);
+    }
+  }
+
+  /* Animação da barra de carregamento */
+  .animate-loading-bar {
+    will-change: transform;
+    animation: loading-bar 1.2s ease-in-out infinite;
+  }
+
+  @keyframes loading-bar {
+    0% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+}

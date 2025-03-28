@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Deployment para Hostinger</title>
+    <style>
+        :root {
+            --primary-color: #0073ff;
+            --secondary-color: #6b7280;
+            --accent-color: #f59e0b;
+            --background-color: #f9fafb;
+            --text-color: #111827;
+            --code-bg: #f3f4f6;
+            --border-color: #e5e7eb;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        h1, h2, h3, h4 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        h1 {
+            font-size: 2.25rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h2 {
+            font-size: 1.75rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.3rem;
+        }
+        
+        h3 {
+            font-size: 1.35rem;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        code, pre {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--code-bg);
+            border-radius: 4px;
+        }
+        
+        code {
+            padding: 0.2em 0.4em;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            padding: 1rem;
+            overflow: auto;
+            border: 1px solid var(--border-color);
+            margin: 1em 0;
+        }
+        
+        pre code {
+            padding: 0;
+            background-color: transparent;
+        }
+        
+        .warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .note {
+            background-color: rgba(0, 115, 255, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        ul, ol {
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .step {
+            counter-increment: step-counter;
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        .command {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 2rem;
+        }
+        
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            margin-right: 0.5rem;
+            background-color: #e5e7eb;
+        }
+        
+        .tab.active {
+            background-color: white;
+            border-color: var(--border-color);
+            position: relative;
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-top: none;
+            background-color: white;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .file-tree {
+            font-family: 'Courier New', Courier, monospace;
+            padding-left: 1rem;
+        }
+        
+        .file-tree ul {
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        
+        .file-tree li {
+            position: relative;
+        }
+        
+        .file-tree li::before {
+            content: '📄';
+            margin-right: 0.5rem;
+        }
+        
+        .file-tree li.folder::before {
+            content: '📁';
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.75rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            h3 {
+                font-size: 1.25rem;
+            }
+            
+            .step {
+                padding-left: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Guia de Deployment para Hostinger</h1>
+        <p>Este guia fornece instruções passo a passo para implantar sua aplicação React Vite na Hostinger.</p>
+    </header>
+    
+    <main>
+        <section>
+            <h2>Pré-requisitos</h2>
+            <ul>
+                <li>Uma conta na <a href="https://www.hostinger.com.br" target="_blank">Hostinger</a></li>
+                <li>Node.js e npm instalados em seu computador local</li>
+                <li>Um plano de hospedagem da Hostinger (Compartilhada, WordPress, Cloud ou VPS)</li>
+                <li>Um domínio configurado na Hostinger</li>
+                <li>Acesso FTP ou ao Gerenciador de Arquivos da Hostinger</li>
+            </ul>
+        </section>
+        
+        <section>
+            <h2>Visão Geral do Processo</h2>
+            <ol>
+                <li>Construir a aplicação React para produção</li>
+                <li>Fazer upload dos arquivos para o servidor da Hostinger</li>
+                <li>Configurar o servidor para comportar uma Single Page Application (SPA)</li>
+                <li>Testar e solucionar problemas</li>
+            </ol>
+        </section>
+        
+        <section>
+            <h2>Guia Passo a Passo</h2>
+            
+            <div class="step">
+                <h3>Preparar a Aplicação para Produção</h3>
+                <p>Antes de fazer o upload para a Hostinger, você precisa construir uma versão otimizada da sua aplicação:</p>
+                
+                <div class="command">
+                    # Instalar dependências<br>
+                    npm install<br><br>
+                    
+                    # Construir a aplicação para produção<br>
+                    npm run build
+                </div>
+                
+                <p>Após a execução bem-sucedida, um diretório <code>dist</code> será criado contendo os arquivos otimizados para produção.</p>
+                
+                <div class="note">
+                    <strong>Nota:</strong> Certifique-se de que todas as variáveis de ambiente necessárias estão configuradas corretamente para o ambiente de produção antes de construir.
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>Upload dos Arquivos para a Hostinger</h3>
+                
+                <div class="tabs">
+                    <div class="tab active" onclick="showTab('file-manager')">File Manager</div>
+                    <div class="tab" onclick="showTab('ftp')">FTP</div>
+                    <div class="tab" onclick="showTab('script')">Script de Deploy</div>
+                </div>
+                
+                <div id="file-manager" class="tab-content active">
+                    <h4>Usando o Gerenciador de Arquivos da Hostinger:</h4>
+                    <ol>
+                        <li>Faça login no painel de controle da Hostinger</li>
+                        <li>Navegue até <strong>Hospedagem de Sites</strong> &gt; Seu domínio &gt; <strong>Gerenciador de Arquivos</strong></li>
+                        <li>Acesse a pasta <code>public_html</code> (ou a pasta raiz do seu domínio)</li>
+                        <li>Se houver arquivos existentes que deseja manter, faça um backup primeiro</li>
+                        <li>Faça o upload do conteúdo da pasta <code>dist</code>:
+                            <ul>
+                                <li>Você pode fazer upload de arquivos individuais, ou</li>
+                                <li>Compactar a pasta <code>dist</code> em um arquivo zip, fazer upload e depois extrair no servidor</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div id="ftp" class="tab-content">
+                    <h4>Usando um Cliente FTP:</h4>
+                    <ol>
+                        <li>Obtenha suas credenciais FTP no painel da Hostinger:
+                            <ul>
+                                <li>Host: geralmente <code>ftp.seudominio.com</code></li>
+                                <li>Nome de usuário: fornecido pela Hostinger</li>
+                                <li>Senha: fornecida pela Hostinger</li>
+                                <li>Porta: 21 (padrão)</li>
+                            </ul>
+                        </li>
+                        <li>Use um cliente FTP como FileZilla, CyberDuck ou WinSCP para conectar ao servidor</li>
+                        <li>Navegue até a pasta raiz do seu site (geralmente <code>public_html</code>)</li>
+                        <li>Faça upload de todo o conteúdo da pasta <code>dist</code> para esta pasta</li>
+                    </ol>
+                    
+                    <div class="warning">
+                        <strong>Importante:</strong> Certifique-se de fazer upload do <em>conteúdo</em> da pasta <code>dist</code>, e não a pasta em si.
+                    </div>
+                </div>
+                
+                <div id="script" class="tab-content">
+                    <h4>Usando o Script de Deploy Automatizado:</h4>
+                    <p>Este projeto inclui um script de deploy para facilitar o processo:</p>
+                    
+                    <div class="command">
+                        # Dar permissão de execução ao script<br>
+                        chmod +x scripts/deploy.sh<br><br>
+                        
+                        # Executar o script<br>
+                        ./scripts/deploy.sh
+                    </div>
+                    
+                    <p>Isso criará um arquivo <code>deploy.zip</code> contendo todos os arquivos de build. Em seguida:</p>
+                    
+                    <ol>
+                        <li>Faça upload do arquivo <code>deploy.zip</code> para a pasta <code>public_html</code> usando o Gerenciador de Arquivos</li>
+                        <li>Extraia o arquivo diretamente no servidor</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>Configuração do Servidor para SPA</h3>
+                <p>Aplicações React são SPAs (Single Page Applications) que utilizam roteamento no lado do cliente. Para que isso funcione corretamente na Hostinger, você precisa configurar o servidor para redirecionar todas as requisições para o index.html:</p>
+                
+                <h4>Configuração do Apache (Hostinger usa Apache por padrão)</h4>
+                
+                <p>O projeto já inclui um arquivo <code>.htaccess</code> que deve ser enviado para a raiz do seu site. Este arquivo contém:</p>
+                
+                <pre><code>&lt;IfModule mod_rewrite.c&gt;
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+&lt;/IfModule&gt;
+
+# Outras configurações para compressão e cache...</code></pre>
+                
+                <div class="note">
+                    <strong>Nota:</strong> Se você encontrar problemas com o roteamento, verifique se:
+                    <ul>
+                        <li>O arquivo <code>.htaccess</code> foi carregado corretamente</li>
+                        <li>O módulo mod_rewrite está ativado no servidor (geralmente está na Hostinger)</li>
+                        <li>Você tem permissões para usar arquivos .htaccess (geralmente permitido na Hostinger)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="step">
+                <h4>Teste e Verificação</h4>
+                <p>Após o upload, visite seu site para verificar se tudo está funcionando corretamente:</p>
+                
+                <ol>
+                    <li>Navegue para o seu domínio no navegador</li>
+                    <li>Verifique se a página inicial carrega corretamente</li>
+                    <li>Teste a navegação entre diferentes rotas (páginas) da sua aplicação</li>
+                    <li>Verifique se todos os recursos (imagens, estilos, scripts) estão carregando</li>
+                    <li>Teste em dispositivos móveis e diferentes navegadores</li>
+                </ol>
+                
+                <h4>Solução de Problemas Comuns</h4>
+                
+                <table border="1" style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 0.5rem; background-color: var(--primary-color); color: white;">Problema</th>
+                            <th style="padding: 0.5rem; background-color: var(--primary-color); color: white;">Possível Solução</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Erro 404 ao navegar diretamente para uma rota</td>
+                            <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Verifique se o arquivo .htaccess está correto e no lugar certo</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Página em branco</td>
+                            <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Verifique o console do navegador (F12) para erros de JavaScript</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Imagens ou recursos não carregam</td>
+                            <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Verifique os caminhos dos arquivos, certifique-se de usar caminhos relativos</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Problemas com API</td>
+                            <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Confirme se as URLs da API estão configuradas corretamente para produção</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Configurações Adicionais na Hostinger</h2>
+            
+            <h3>Configurando SSL/HTTPS</h3>
+            <p>É altamente recomendável usar HTTPS para sua aplicação:</p>
+            <ol>
+                <li>No painel de controle da Hostinger, navegue até <strong>Hospedagem de Sites</strong> &gt; Seu domínio &gt; <strong>SSL</strong></li>
+                <li>Ative o certificado SSL gratuito Let's Encrypt</li>
+                <li>Configure o redirecionamento de HTTP para HTTPS para garantir que todos os usuários acessem a versão segura do site</li>
+            </ol>
+            
+            <h3>Otimização de Performance</h3>
+            <p>A Hostinger oferece várias opções para melhorar o desempenho do seu site:</p>
+            <ul>
+                <li><strong>LiteSpeed Cache</strong>: Ative-o no painel de controle para melhorar o carregamento das páginas</li>
+                <li><strong>Compressão Gzip/Brotli</strong>: Já configurada no arquivo .htaccess fornecido</li>
+                <li><strong>Cache do navegador</strong>: Também configurado no arquivo .htaccess</li>
+            </ul>
+        </section>
+        
+        <section>
+            <h2>Manutenção e Atualizações</h2>
+            
+            <h3>Atualizando Seu Site</h3>
+            <p>Para atualizar sua aplicação após fazer mudanças:</p>
+            <ol>
+                <li>Faça as alterações no código</li>
+                <li>Reconstrua a aplicação: <code>npm run build</code></li>
+                <li>Faça o upload apenas dos arquivos modificados ou repita o processo de upload completo</li>
+            </ol>
+            
+            <h3>Backup</h3>
+            <p>É sempre uma boa prática manter backups do seu site:</p>
+            <ul>
+                <li>Use a função de backup automatizado disponível no painel da Hostinger</li>
+                <li>Mantenha cópias locais do seu código-fonte</li>
+                <li>Se seu aplicativo usar banco de dados, faça backups regulares dos dados</li>
+            </ul>
+        </section>
+        
+        <section>
+            <h2>Estrutura de Arquivos Recomendada</h2>
+            
+            <p>Após o deployment, a estrutura de arquivos no servidor deve ficar assim:</p>
+            
+            <div class="file-tree">
+                <ul>
+                    <li class="folder">public_html/</li>
+                    <ul>
+                        <li>.htaccess</li>
+                        <li>index.html</li>
+                        <li>robots.txt</li>
+                        <li class="folder">assets/</li>
+                        <ul>
+                            <li>favicon.ico</li>
+                            <li class="folder">css/</li>
+                            <li class="folder">js/</li>
+                            <li class="folder">images/</li>
+                        </ul>
+                    </ul>
+                </div>
+        </section>
+    </main>
+    
+    <footer style="margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 1rem; text-align: center;">
+        <p>Última atualização: 2023 | Versão da aplicação: 1.0.0</p>
+        <p>Tecnologias: React, TypeScript, Tailwind CSS, Shadcn/UI</p>
+    </footer>
+    
+    <script>
+        function showTab(tabId) {
+            // Hide all tab contents
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // Remove active class from all tabs
+            const tabs = document.getElementsByClassName('tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            // Show the selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Set the clicked tab as active
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

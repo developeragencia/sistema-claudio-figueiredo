@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Transaction {
+  id             String           @id @default(cuid())
+  type           String
+  status         TransactionStatus
+  clientName     String
+  amount         Float
+  date           DateTime
+  description    String?
+  documentNumber String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+model Payment {
+  id              String    @id @default(uuid())
+  supplierName    String
+  supplierCnpj    String
+  paymentDate     DateTime
+  dueDate        DateTime
+  amount         Decimal
+  status         PaymentStatus @default(PENDING)
+  taxRetention   Boolean    @default(false)
+  taxAmount      Decimal?
+  notes          String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@map("payments")
+}
+
+model Supplier {
+  id        String   @id @default(uuid())
+  name      String
+  cnpj      String   @unique
+  email     String?
+  phone     String?
+  address   String?
+  city      String?
+  state     String?
+  zip       String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("suppliers")
+}
+
+model TaxRetention {
+  id          String   @id @default(uuid())
+  paymentId   String
+  type        TaxType
+  amount      Decimal
+  date        DateTime
+  status      TaxStatus @default(PENDING)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("tax_retentions")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+enum TaxType {
+  ISS
+  IRRF
+  INSS
+  PIS
+  COFINS
+  CSLL
+}
+
+enum TaxStatus {
+  PENDING
+  PROCESSED
+  CANCELLED
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+} 

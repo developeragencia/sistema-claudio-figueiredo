@@ -1,0 +1,83 @@
+
+<?php
+/**
+ * Uploader seguro para arquivos - Exemplo para Hostinger
+ * 
+ * IMPORTANTE: Renomeie este arquivo para "uploader.php" e defina uma chave segura
+ * antes de usar em produção. Recomenda-se proteger este arquivo com autenticação
+ * ou removê-lo após o uso.
+ */
+
+// Configurações de segurança
+$config = [
+    'apiKey' => 'SUA_CHAVE_SECRETA_AQUI', // Altere para uma chave segura!
+    'allowedExtensions' => ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'zip'],
+    'maxFileSize' => 10 * 1024 * 1024, // 10MB
+    'uploadDirectory' => 'uploads/' // Diretório relativo onde os arquivos serão salvos
+];
+
+// Verificar se a pasta de uploads existe, caso não, tentar criar
+if (!file_exists($config['uploadDirectory'])) {
+    mkdir($config['uploadDirectory'], 0755, true);
+}
+
+// Verificar a chave API
+$headers = getallheaders();
+$apiKey = isset($headers['X-Api-Key']) ? $headers['X-Api-Key'] : '';
+
+if ($apiKey !== $config['apiKey']) {
+    header('HTTP/1.1 401 Unauthorized');
+    echo json_encode(['error' => 'Chave de API inválida']);
+    exit;
+}
+
+// Processar upload de arquivo
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Verificar se o arquivo foi enviado sem erros
+    if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+        $file = $_FILES['file'];
+        
+        // Verificar o tamanho do arquivo
+        if ($file['size'] > $config['maxFileSize']) {
+            header('HTTP/1.1 400 Bad Request');
+            echo json_encode(['error' => 'Arquivo excede o tamanho máximo permitido']);
+            exit;
+        }
+        
+        // Verificar a extensão do arquivo
+        $fileExt = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        if (!in_array($fileExt, $config['allowedExtensions'])) {
+            header('HTTP/1.1 400 Bad Request');
+            echo json_encode(['error' => 'Tipo de arquivo não permitido']);
+            exit;
+        }
+        
+        // Gerar um nome seguro para o arquivo
+        $newFileName = uniqid() . '_' . preg_replace('/[^a-zA-Z0-9\-\._]/', '', $file['name']);
+        $destination = $config['uploadDirectory'] . $newFileName;
+        
+        // Mover o arquivo para o destino
+        if (move_uploaded_file($file['tmp_name'], $destination)) {
+            echo json_encode([
+                'success' => true,
+                'file' => [
+                    'name' => $newFileName,
+                    'original_name' => $file['name'],
+                    'size' => $file['size'],
+                    'type' => $file['type'],
+                    'url' => $config['uploadDirectory'] . $newFileName
+                ]
+            ]);
+        } else {
+            header('HTTP/1.1 500 Internal Server Error');
+            echo json_encode(['error' => 'Falha ao mover o arquivo enviado']);
+        }
+    } else {
+        header('HTTP/1.1 400 Bad Request');
+        echo json_encode(['error' => 'Nenhum arquivo enviado ou erro no upload']);
+    }
+} else {
+    header('HTTP/1.1 405 Method Not Allowed');
+    echo json_encode(['error' => 'Apenas método POST é permitido']);
+}
+?>

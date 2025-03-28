@@ -1,0 +1,49 @@
+
+@layer utilities {
+  /* Gradient effect */
+  .gradient-shift {
+    background-size: 200% 200%;
+    will-change: background-position;
+    animation: gradient-animation 5s ease infinite;
+  }
+  
+  @keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Hover-only gradient effect */
+  .hover-gradient {
+    background-size: 200% 200%;
+    background-image: linear-gradient(to right, transparent, transparent);
+    transition: background-image 0.5s ease;
+  }
+  
+  .hover-gradient:hover {
+    background-image: var(--gradient);
+  }
+  
+  /* System color gradients - these align with the theme colors */
+  .primary-gradient {
+    --gradient: linear-gradient(135deg, hsl(var(--primary)/0.2), hsl(var(--primary)/0.3));
+  }
+  
+  .secondary-gradient {
+    --gradient: linear-gradient(135deg, hsl(var(--secondary)/0.2), hsl(var(--secondary)/0.3));
+  }
+  
+  .accent-gradient {
+    --gradient: linear-gradient(135deg, hsl(var(--accent)/0.2), hsl(var(--accent)/0.3));
+  }
+  
+  .muted-gradient {
+    --gradient: linear-gradient(135deg, hsl(var(--muted)/0.2), hsl(var(--muted)/0.3));
+  }
+}

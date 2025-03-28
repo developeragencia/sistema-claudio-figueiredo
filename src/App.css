@@ -1,0 +1,236 @@
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  #root {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  #root {
+    padding: 2rem;
+  }
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 1.25em;
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: 2em;
+  }
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Mobile optimizations */
+.mobile-container {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .mobile-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .mobile-container {
+    max-width: 1280px;
+  }
+}
+
+/* Touch-friendly button sizes */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Improve readability on mobile */
+.mobile-text {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 640px) {
+  .mobile-text {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+}
+
+/* Fix for Recharts container on mobile */
+.recharts-responsive-container {
+  min-height: 200px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+/* Ensure charts are visible and centered */
+.recharts-wrapper {
+  min-width: 200px !important;
+  min-height: 200px !important;
+  margin: 0 auto !important;
+}
+
+.recharts-surface {
+  overflow: visible;
+}
+
+/* Center charts in their containers */
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Mobile dashboard cards */
+.dashboard-card {
+  min-height: 120px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+/* Fix for mobile admin panel overflow */
+.admin-content {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Mobile form adjustments */
+@media (max-width: 640px) {
+  .form-row {
+    flex-direction: column;
+  }
+  
+  .form-col {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .dialog-footer {
+    flex-direction: column;
+  }
+  
+  .dialog-footer button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Mobile table adjustments */
+@media (max-width: 768px) {
+  .mobile-card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .mobile-card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+}
+
+/* Improved mobile scroll handling */
+body {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile headings */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  h2 {
+    font-size: 1.25rem !important;
+  }
+  
+  h3 {
+    font-size: 1.125rem !important;
+  }
+}
+
+/* Button groups on mobile */
+@media (max-width: 640px) {
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .button-group > * {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Improved visibility for mobile forms */
+@media (max-width: 640px) {
+  input, select, textarea {
+    font-size: 16px !important; /* Prevents iOS zoom on focus */
+  }
+}
