@@ -4,23 +4,12 @@
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
-  "outputDirectory": "dist",
+  "outputDirectory": ".next",
   "regions": ["gru1"],
   "env": {
     "NODE_ENV": "production",
-    "VITE_APP_BASE_URL": "https://secure-bridge-connect.vercel.app",
-    "VITE_API_URL": "https://secure-bridge-connect.vercel.app/api",
-    "VITE_APP_NAME": "Secure Bridge Connect",
-    "VITE_APP_URL": "https://secure-bridge-connect.vercel.app",
-    "VITE_APP_ENV": "production",
-    "VITE_API_TIMEOUT": "30000",
-    "VITE_API_RETRY_COUNT": "3",
-    "VITE_AUTH_COOKIE_NAME": "secure_bridge_connect_token",
-    "VITE_AUTH_COOKIE_EXPIRES": "7",
-    "VITE_AUTH_TOKEN_SECRET": "@auth-token-secret",
-    "VERCEL_TOKEN": "@vercel-token",
-    "VERCEL_ORG_ID": "@vercel-org-id",
-    "VERCEL_PROJECT_ID": "@vercel-project-id",
+    "NEXT_PUBLIC_APP_URL": "@next_public_app_url",
+    "NEXT_PUBLIC_API_URL": "@next_public_api_url",
     "DATABASE_URL": "@database-url",
     "SMTP_HOST": "@smtp-host",
     "SMTP_PORT": "@smtp-port",
@@ -36,24 +25,13 @@
     "LOG_LEVEL": "info",
     "LOG_FORMAT": "json",
     "LOG_PATH": "/var/log/secure-bridge-connect",
-    "PERFORMANCE_MONITORING": "true",
-    "FEATURE_FLAGS": "{}",
-    "EXTERNAL_API_KEY": "@external-api-key",
-    "VITE_GA_ID": "@ga-id",
     "NEXT_PUBLIC_SUPABASE_URL": "@next_public_supabase_url",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@next_public_supabase_anon_key",
     "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
     "SUPABASE_JWT_SECRET": "@supabase_jwt_secret",
     "NEXTAUTH_URL": "@nextauth_url",
-    "NEXTAUTH_SECRET": "@nextauth_secret",
-    "NEXT_PUBLIC_APP_URL": "@next_public_app_url"
+    "NEXTAUTH_SECRET": "@nextauth_secret"
   },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
