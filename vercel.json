@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "framework": "vite",
+  "framework": "nextjs",
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
@@ -39,7 +39,14 @@
     "PERFORMANCE_MONITORING": "true",
     "FEATURE_FLAGS": "{}",
     "EXTERNAL_API_KEY": "@external-api-key",
-    "VITE_GA_ID": "@ga-id"
+    "VITE_GA_ID": "@ga-id",
+    "NEXT_PUBLIC_SUPABASE_URL": "@next_public_supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@next_public_supabase_anon_key",
+    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
+    "SUPABASE_JWT_SECRET": "@supabase_jwt_secret",
+    "NEXTAUTH_URL": "@nextauth_url",
+    "NEXTAUTH_SECRET": "@nextauth_secret",
+    "NEXT_PUBLIC_APP_URL": "@next_public_app_url"
   },
   "rewrites": [
     {
