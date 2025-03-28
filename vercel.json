@@ -1,71 +1,14 @@
 {
   "version": 2,
-  "framework": "nextjs",
   "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
+  "framework": "nextjs",
   "installCommand": "npm install",
   "outputDirectory": ".next",
-  "regions": ["gru1"],
   "env": {
-    "NODE_ENV": "production",
-    "NEXT_PUBLIC_APP_URL": "https://sistema-claudio-figueiredo.vercel.app",
-    "NEXT_PUBLIC_API_URL": "https://sistema-claudio-figueiredo.vercel.app/api",
     "NEXT_PUBLIC_SUPABASE_URL": "https://iqbqfgwxvjlxzqxvvqxc.supabase.co",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxYnFmZ3d4dmpseHpxeHZ2cXhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE0NzU1NzAsImV4cCI6MjAyNzA1MTU3MH0.Gy-TGkOYK4mnpAMdjXyXkYZYXKQV_W2EQRZ3oCeBJ8k",
     "SUPABASE_SERVICE_ROLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxYnFmZ3d4dmpseHpxeHZ2cXhjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMTQ3NTU3MCwiZXhwIjoyMDI3MDUxNTcwfQ.Gy-TGkOYK4mnpAMdjXyXkYZYXKQV_W2EQRZ3oCeBJ8k",
     "SUPABASE_JWT_SECRET": "prj_e3veMTl1O0R4XE61ZDgw4spVfrZi",
-    "NEXTAUTH_URL": "https://sistema-claudio-figueiredo.vercel.app",
     "NEXTAUTH_SECRET": "e3veMTl1O0R4XE61ZDgw4spVfrZi"
-  },
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/assets/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
-        }
-      ]
-    }
-  ],
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "github": {
-    "silent": true,
-    "autoAlias": true
   }
 }
