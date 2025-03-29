@@ -1,13 +1,12 @@
-
 import React from 'react';
-import { useNavigate  } from "@/hooks/use-router";
+import { useRouter } from 'next/navigation';
 import AdminLayout from '@/components/admin/AdminLayout';
 import AdminProfileSettings from '@/components/admin/profile/AdminProfileSettings';
 import { useToast } from '@/components/ui/use-toast';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 const AdminProfilePage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { toast } = useToast();
   const { user } = useAdminAuth();
   

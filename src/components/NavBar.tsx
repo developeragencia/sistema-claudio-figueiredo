@@ -73,7 +73,7 @@ const NavButton: React.FC<NavButtonProps> = ({ to, label, icon }) => {
     (to === '/admin' && pathname.startsWith('/admin'));
 
   return (
-    <Link href={to}>
+    <Link href={to} passHref legacyBehavior>
       <motion.div
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}

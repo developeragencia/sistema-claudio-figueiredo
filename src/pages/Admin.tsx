@@ -1,8 +1,7 @@
-
 import React, { useEffect, useCallback, memo } from 'react';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { useAdminUI } from '@/hooks/useAdminUI';
-import { useLocation, useParams, useNavigate  } from "@/hooks/use-router";
+import { useRouter, usePathname } from 'next/navigation';
 
 // Admin components
 import AdminSidebar from '@/components/admin/AdminSidebar';
@@ -20,7 +19,8 @@ const MemoizedAdminMobileNav = memo(AdminMobileNav);
 
 const Admin = () => {
   const { user, loading, handleLogout } = useAdminAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
+  const pathname = usePathname();
   const {
     activeTab,
     setActiveTab,
@@ -37,14 +37,11 @@ const Admin = () => {
     toggleMobileMenu
   } = useAdminUI();
   
-  const location = useLocation();
-  const params = useParams();
-  
   // Parse the route path to set the active tab
   useEffect(() => {
     try {
       // Extract the tab from the current URL path
-      const pathParts = location.pathname.split('/');
+      const pathParts = pathname.split('/');
       
       // If we're at /admin with subtabs
       if (pathParts.length >= 3) {
@@ -69,7 +66,7 @@ const Admin = () => {
       // Fallback to dashboard
       setActiveTab('dashboard');
     }
-  }, [location.pathname, setActiveTab, activeTab]);
+  }, [pathname, setActiveTab, activeTab]);
 
   if (loading) {
     return <AdminLoading />;
