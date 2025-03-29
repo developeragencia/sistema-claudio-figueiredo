@@ -1,157 +1,109 @@
-import React, { useState } from 'react';
-import { useRouter } from "next/navigation";
-import AdminHeader from './AdminHeader';
+import React, { Suspense } from 'react';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
+import { useAdminUI } from '@/hooks/useAdminUI';
+import { usePathname } from 'next/navigation';
+
+// Admin components
 import AdminSidebar from './AdminSidebar';
 import AdminMobileNav from './AdminMobileNav';
+import AdminHeader from './AdminHeader';
 import MainContent from './MainContent';
-import MobileMenu from './MobileMenu';
-import { useNotificationStore } from '@/hooks/useNotificationStore';
-import { useToast } from '@/components/ui/use-toast';
+import MobileMenuOverlay from './MobileMenuOverlay';
+import AdminLoading from './AdminLoading';
+
+// Componentes com Suspense
+const SuspenseMainContent = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<AdminLoading />}>
+    {children}
+  </Suspense>
+);
+
+const SuspenseSidebar = (props: any) => (
+  <Suspense fallback={<div className="w-64 bg-sidebar" />}>
+    <AdminSidebar {...props} />
+  </Suspense>
+);
 
 interface AdminLayoutProps {
+  children: React.ReactNode;
   activeTab: string;
-  children?: React.ReactNode;
 }
 
-const AdminLayout = ({ activeTab: initialActiveTab, children }: AdminLayoutProps) => {
-  const router = useRouter();
-  const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState(initialActiveTab);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(() => 
-    localStorage.getItem('darkMode') === 'true'
-  );
-  const [expandedSection, setExpandedSection] = useState<string | null>('main');
-  const [searchQuery, setSearchQuery] = useState("");
-  
-  const hasUnreadNotifications = useNotificationStore(state => 
-    state.notifications.some(n => !n.read)
-  );
-  
-  // Mock user data - in a real app would come from auth
-  const user = {
-    id: '1',
-    name: 'Admin User',
-    email: 'admin@sistemasclaudio.com',
-  };
-  
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-  
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
-  
-  const toggleDarkMode = () => {
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    localStorage.setItem('darkMode', String(newDarkMode));
-    
-    // Apply dark mode to document
-    if (newDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
-  
-  const toggleSection = (section: string) => {
-    setExpandedSection(expandedSection === section ? null : section);
-  };
-  
-  const handleSetActiveTab = (tab: string) => {
+const AdminLayout = ({ children, activeTab }: AdminLayoutProps) => {
+  const { user, handleLogout } = useAdminAuth();
+  const pathname = usePathname();
+  const {
+    sidebarOpen,
+    darkMode,
+    hasNotifications,
+    searchQuery,
+    setSearchQuery,
+    expandedSection,
+    mobileMenuOpen,
+    toggleSidebar,
+    toggleDarkMode,
+    toggleSection,
+    toggleMobileMenu,
+    setActiveTab
+  } = useAdminUI();
+
+  // Atualiza a aba ativa quando o pathname mudar
+  React.useEffect(() => {
+    const tab = pathname.split('/').pop() || 'dashboard';
     setActiveTab(tab);
-    
-    // Close mobile menu if open
-    if (mobileMenuOpen) {
-      setMobileMenuOpen(false);
-    }
-    
-    // Navigate to specific routes
-    if (tab === 'profile') {
-      router.push('/admin/profile');
-    } else if (tab === 'notifications') {
-      router.push('/admin/notifications');
-    } else if (tab === 'clients') {
-      router.push('/admin/clients');
-    } else {
-      router.push(`/admin/${tab}`);
-    }
-  };
-  
-  const handleLogout = () => {
-    // Clear auth data
-    localStorage.removeItem('adminAuth');
-    localStorage.removeItem('adminAuthRemembered');
-    
-    // Show toast notification
-    toast({
-      title: "Logout realizado",
-      description: "Você foi desconectado com sucesso.",
-    });
-    
-    // Redirect to login page
-    router.push('/login');
-  };
-  
+  }, [pathname, setActiveTab]);
+
   return (
-    <div className={`min-h-screen flex flex-col ${darkMode ? 'dark' : ''}`}>
-      <AdminHeader
+    <div className="min-h-screen flex flex-col bg-background text-foreground overflow-hidden">
+      <AdminHeader 
         toggleSidebar={toggleSidebar}
         toggleMobileMenu={toggleMobileMenu}
         toggleDarkMode={toggleDarkMode}
         handleLogout={handleLogout}
         sidebarOpen={sidebarOpen}
         darkMode={darkMode}
-        hasNotifications={hasUnreadNotifications}
+        hasNotifications={hasNotifications}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         user={user}
-        setActiveTab={handleSetActiveTab}
+        setActiveTab={setActiveTab}
       />
       
+      <MobileMenuOverlay 
+        mobileMenuOpen={mobileMenuOpen}
+        toggleMobileMenu={toggleMobileMenu}
+        activeTab={activeTab}
+        expandedSection={expandedSection}
+        user={user}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        toggleSection={toggleSection}
+        setActiveTab={setActiveTab}
+        toggleDarkMode={toggleDarkMode}
+        darkMode={darkMode}
+        handleLogout={handleLogout}
+      />
+      
+      <AdminMobileNav activeTab={activeTab} setActiveTab={setActiveTab} />
+      
       <div className="flex flex-1 overflow-hidden">
-        <AdminSidebar
+        <SuspenseSidebar 
           activeTab={activeTab}
           sidebarOpen={sidebarOpen}
           expandedSection={expandedSection}
           user={user}
           toggleSidebar={toggleSidebar}
           toggleSection={toggleSection}
-          setActiveTab={handleSetActiveTab}
+          setActiveTab={setActiveTab}
           handleLogout={handleLogout}
         />
         
-        <div className="flex flex-col flex-1 overflow-hidden">
-          <AdminMobileNav
-            activeTab={activeTab}
-            setActiveTab={handleSetActiveTab}
-          />
-          
-          {/* Use children instead of MainContent when children are provided */}
-          {children ? (
-            <main className="flex-1 overflow-y-auto p-4 sm:p-6 bg-background">
-              <div className="container mx-auto max-w-7xl">
-                {children}
-              </div>
-            </main>
-          ) : (
-            <MainContent activeTab={activeTab} user={user} />
-          )}
-        </div>
+        <main className="flex-1 overflow-y-auto">
+          <SuspenseMainContent>
+            {children}
+          </SuspenseMainContent>
+        </main>
       </div>
-      
-      {/* Mobile Menu */}
-      <MobileMenu
-        isOpen={mobileMenuOpen}
-        onClose={toggleMobileMenu}
-        activeTab={activeTab}
-        setActiveTab={handleSetActiveTab}
-        user={user}
-        handleLogout={handleLogout}
-      />
     </div>
   );
 };
