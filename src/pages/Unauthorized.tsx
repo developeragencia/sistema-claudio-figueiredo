@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link  } from "@/hooks/use-router"
 import { Button } from '@/components/ui/button'
 
 export function Unauthorized() {

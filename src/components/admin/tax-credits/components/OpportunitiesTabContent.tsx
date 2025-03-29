@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation'
 import OpportunityCard from './OpportunityCard';
 import OpportunityDetailsModal from './OpportunityDetailsModal';
 import { useToast } from '@/components/ui/use-toast';
@@ -11,7 +10,7 @@ const OpportunitiesTabContent: React.FC = () => {
   const [selectedOpportunity, setSelectedOpportunity] = useState<any | null>(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
   const { toast } = useToast();
 
   // Sample data for opportunities
@@ -91,7 +90,7 @@ const OpportunitiesTabContent: React.FC = () => {
     });
     
     // Navigate to tax credits page or recovery page
-    navigate('/admin/tax_credits');
+    router.push('/admin/tax_credits');
   };
 
   const handleRefresh = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from "@/hooks/use-router";
 import ActiveClientHeader from '@/components/ActiveClientHeader';
 import NotificationsHeader from '@/components/notifications/NotificationsHeader';
 import NotificationsList from '@/components/notifications/NotificationsList';

@@ -1,23 +1,71 @@
-import { useContext } from 'react';
-import { AuthContext } from '@/contexts/AuthContext';
+'use client';
+
+import { useEffect, useState } from 'react'
+import { createClient } from '@/lib/supabase-client'
+import { User } from '@supabase/supabase-js'
 
 export function useAuth() {
-  const context = useContext(AuthContext);
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
+  const supabase = createClient()
 
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+  useEffect(() => {
+    // Verifica o estado inicial da autenticação
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null)
+      setLoading(false)
+    })
+
+    // Escuta mudanças no estado de autenticação
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setUser(session?.user ?? null)
+      setLoading(false)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  const signIn = async (email: string, password: string) => {
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+      if (error) throw error
+    } catch (error) {
+      console.error('Erro ao fazer login:', error)
+      throw error
+    }
   }
 
-  // Adiciona um método auxiliar para verificar permissões (usado no ProtectedRoute)
-  const checkPermission = (permission: string) => {
-    return context.user?.permissions?.includes(permission) || false;
-  };
+  const signUp = async (email: string, password: string) => {
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+      })
+      if (error) throw error
+    } catch (error) {
+      console.error('Erro ao criar conta:', error)
+      throw error
+    }
+  }
 
-  const isAuthenticated = !!context.user;
+  const signOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error)
+      throw error
+    }
+  }
 
-  return { 
-    ...context,
-    isAuthenticated,
-    checkPermission
-  };
+  return {
+    user,
+    loading,
+    signIn,
+    signUp,
+    signOut,
+  }
 }

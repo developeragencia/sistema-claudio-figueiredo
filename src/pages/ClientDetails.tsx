@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate  } from "@/hooks/use-router";
 import { useClient, useUpdateClient } from '@/hooks/useClients';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';

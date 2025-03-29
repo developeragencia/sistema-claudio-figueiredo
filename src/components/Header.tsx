@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link  } from "@/hooks/use-router";
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

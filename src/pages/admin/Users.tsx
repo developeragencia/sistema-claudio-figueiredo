@@ -18,7 +18,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { User, UserFormData } from '@/types/users';
-import { useQueryClient } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 const roleLabels = {
   MASTER_ADMIN: 'Master Admin',

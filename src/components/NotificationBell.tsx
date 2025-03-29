@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from "@/hooks/use-router";
 import { Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {

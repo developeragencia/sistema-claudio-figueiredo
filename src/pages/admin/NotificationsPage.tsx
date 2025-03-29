@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from "@/hooks/use-router";
 import AdminLayout from '@/components/admin/AdminLayout';
 import { useNotifications } from '@/hooks/useNotifications';
 import NotificationsHeader from '@/components/notifications/NotificationsHeader';

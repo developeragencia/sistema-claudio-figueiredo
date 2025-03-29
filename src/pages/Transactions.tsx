@@ -10,7 +10,7 @@ import { Loader2 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { useClientStore } from '@/hooks/useClientStore';
 import ActiveClientHeader from '@/components/ActiveClientHeader';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from "@/hooks/use-router";
 import { ArrowLeft } from 'lucide-react';
 
 const ITEMS_PER_PAGE = 10;

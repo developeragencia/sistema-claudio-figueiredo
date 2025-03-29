@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet  } from "@/hooks/use-router";
 import { ActiveClientSelector } from '../header/ActiveClientSelector';
 
 export default function Layout() {

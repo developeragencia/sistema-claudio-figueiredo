@@ -1,6 +1,6 @@
 
 import { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from "@/hooks/use-router";
 import { toast } from 'sonner';
 
 export const useTaxCreditActions = () => {

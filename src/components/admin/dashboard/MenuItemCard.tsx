@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, ExternalLink, Sparkles, MousePointerClick, Star } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from "next/navigation";
 import { cn } from '@/lib/utils';
 import { MenuItem } from './types';
 import {
@@ -22,7 +21,7 @@ interface MenuItemCardProps {
 }
 
 const MenuItemCard: React.FC<MenuItemCardProps> = ({ item }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleMenuClick = (event: React.MouseEvent) => {
     // Prevent event propagation so parent elements don't capture the click
@@ -37,39 +36,39 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item }) => {
     } else {
       // Navigate to the appropriate route based on the item's route value
       if (item.route === 'clients') {
-        navigate('/secure/clients');
+        router.push('/secure/clients');
       } else if (item.route === 'tax_credits') {
-        navigate('/secure/tax_credits');
+        router.push('/secure/tax_credits');
       } else if (item.route === 'tax_calculator') {
-        navigate('/secure/tax_calculator');
+        router.push('/secure/tax_calculator');
       } else if (item.route === 'calculations/irrf') {
-        navigate('/secure/calculations/irrf');
+        router.push('/secure/calculations/irrf');
       } else if (item.route === 'irrf_recovery') {
-        navigate('/secure/irrf_recovery');
+        router.push('/secure/irrf_recovery');
       } else if (item.route === 'credit_identification') {
-        navigate('/secure/credit_identification');
+        router.push('/secure/credit_identification');
       } else if (item.route === 'detailed_reports') {
-        navigate('/secure/detailed_reports');
+        router.push('/secure/detailed_reports');
       } else if (item.route === 'tax_compensation_reports') {
-        navigate('/secure/tax_compensation_reports');
+        router.push('/secure/tax_compensation_reports');
       } else if (item.route === 'interactive_dashboard') {
-        navigate('/secure/interactive_dashboard');
+        router.push('/secure/interactive_dashboard');
       } else if (item.route === 'retention_receipts') {
-        navigate('/secure/retention_receipts');
+        router.push('/secure/retention_receipts');
       } else if (item.route === 'fiscal_reports') {
-        navigate('/secure/fiscal_reports');
+        router.push('/secure/fiscal_reports');
       } else if (item.route === 'commercial/proposals') {
-        navigate('/secure/proposals');
+        router.push('/secure/proposals');
       } else if (item.route === 'audit_management') {
-        navigate('/secure/audit_management');
+        router.push('/secure/audit_management');
       } else if (item.route.startsWith('/')) {
         // Route already has a leading slash
-        navigate(item.route);
+        router.push(item.route);
       } else if (item.route === 'dashboard') {
         // For dashboard, navigate to the secure dashboard
-        navigate('/secure/dashboard');
+        router.push('/secure/dashboard');
       } else {
-        navigate(`/secure/${item.route}`);
+        router.push(`/secure/${item.route}`);
       }
     }
   };

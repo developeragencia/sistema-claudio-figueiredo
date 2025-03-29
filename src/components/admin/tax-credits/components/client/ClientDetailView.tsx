@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate  } from "@/hooks/use-router";
 import { FileText, Shield, Plus } from 'lucide-react';
 import { useClientStore } from '@/hooks/useClientStore';
 import { useActiveClient } from '@/hooks/useActiveClient';

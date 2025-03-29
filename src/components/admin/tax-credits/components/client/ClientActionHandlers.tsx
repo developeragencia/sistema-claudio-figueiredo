@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from "@/hooks/use-router";
 import { useToast } from '@/components/ui/use-toast';
 import { Client } from '@/types/client';
 import { useActiveClient } from '@/hooks/useActiveClient';

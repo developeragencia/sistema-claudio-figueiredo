@@ -2,7 +2,7 @@
 import React, { useEffect, useCallback, memo } from 'react';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { useAdminUI } from '@/hooks/useAdminUI';
-import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useParams, useNavigate  } from "@/hooks/use-router";
 
 // Admin components
 import AdminSidebar from '@/components/admin/AdminSidebar';

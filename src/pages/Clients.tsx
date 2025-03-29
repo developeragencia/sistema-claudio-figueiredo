@@ -22,7 +22,7 @@ import { Loader2, Plus, Search, Trash2 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { Client } from '@/types/user';
 import ClientForm from '@/components/clients/ClientForm';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from "@/hooks/use-router";
 import { hasPermission } from '@/lib/permissions';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';

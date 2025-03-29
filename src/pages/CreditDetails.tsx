@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams  } from "@/hooks/use-router";
 import ActiveClientHeader from '@/components/ActiveClientHeader';
 import DetailHeader from '@/components/declarations/DetailHeader';
 import { Button } from '@/components/ui/button';

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   Sun, Moon, Menu, Search, Bell, Settings, 
@@ -17,8 +16,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import ActiveClientIndicator from './ActiveClientIndicator';
+import { useRouter } from "next/navigation";
+import { ActiveClientIndicator } from './indicators/ActiveClientIndicator';
 
 interface AdminHeaderProps {
   toggleSidebar: () => void;
@@ -47,7 +46,7 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({
   user,
   setActiveTab,
 }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [showSearch, setShowSearch] = React.useState(false);
   
   const handleSearchToggle = () => {
@@ -66,17 +65,17 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({
   
   const handleProfileClick = () => {
     setActiveTab('admin_profile');
-    navigate('/admin/admin_profile');
+    router.push('/admin/admin_profile');
   };
   
   const handleNotificationsClick = () => {
     setActiveTab('notifications');
-    navigate('/admin/notifications');
+    router.push('/admin/notifications');
   };
   
   const handleSettingsClick = () => {
     setActiveTab('settings');
-    navigate('/admin/settings');
+    router.push('/admin/settings');
   };
   
   return (

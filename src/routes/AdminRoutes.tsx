@@ -1,6 +1,6 @@
 
 import React, { lazy, Suspense } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation  } from "@/hooks/use-router";
 import AdminLoading from '../components/admin/AdminLoading';
 import AdminLayout from '../components/admin/AdminLayout';
 
@@ -99,7 +99,7 @@ const AdminRoutes = () => {
   const activeTab = getActiveTab();
 
   return (
-    <Routes>
+    
       <Route path="/" element={<AdminLayout activeTab={activeTab} />}>
         <Route index element={
           <Suspense fallback={<AdminLoading />}>
@@ -157,7 +157,7 @@ const AdminRoutes = () => {
         <Route path="data_processing" element={<DataProcessingPanel />} />
         <Route path="data_reconciliation" element={<DataReconciliationPanel />} />
       </Route>
-    </Routes>
+    
   );
 };
 

@@ -12,36 +12,53 @@ export interface Database {
       users: {
         Row: {
           id: string
-          name: string
           email: string
-          role: 'USER' | 'ADMIN' | 'MASTER_ADMIN'
+          name: string | null
           avatar_url: string | null
           created_at: string
           updated_at: string
-          last_login: string | null
-          status: 'active' | 'inactive' | 'blocked'
         }
         Insert: {
-          id?: string
-          name: string
+          id: string
           email: string
-          role?: 'USER' | 'ADMIN' | 'MASTER_ADMIN'
+          name?: string | null
           avatar_url?: string | null
           created_at?: string
           updated_at?: string
-          last_login?: string | null
-          status?: 'active' | 'inactive' | 'blocked'
         }
         Update: {
           id?: string
-          name?: string
           email?: string
-          role?: 'USER' | 'ADMIN' | 'MASTER_ADMIN'
+          name?: string | null
           avatar_url?: string | null
           created_at?: string
           updated_at?: string
-          last_login?: string | null
-          status?: 'active' | 'inactive' | 'blocked'
+        }
+      }
+      profiles: {
+        Row: {
+          id: string
+          user_id: string
+          name: string
+          avatar_url: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          name: string
+          avatar_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          name?: string
+          avatar_url?: string | null
+          created_at?: string
+          updated_at?: string
         }
       }
       clients: {
@@ -246,4 +263,7 @@ export interface Database {
       [_ in never]: never
     }
   }
-} 
+}
+
+export type Tables<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Row']
+export type Enums<T extends keyof Database['public']['Enums']> = Database['public']['Enums'][T] 

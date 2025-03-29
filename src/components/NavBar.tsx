@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from "react-router-dom";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import AnimatedLogo from './AnimatedLogo';
 import { Menu, X, Home, Settings, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,8 +12,8 @@ const NavBar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
-  const isSistemasPage = location.pathname === '/sistemas';
+  const pathname = usePathname();
+  const isSistemasPage = pathname === '/sistemas';
   const { user, logout } = useAuth();
 
   useEffect(() => {
@@ -67,12 +68,12 @@ interface NavButtonProps {
 }
 
 const NavButton: React.FC<NavButtonProps> = ({ to, label, icon }) => {
-  const location = useLocation();
-  const isActive = location.pathname === to || 
-    (to === '/admin' && location.pathname.startsWith('/admin'));
+  const pathname = usePathname();
+  const isActive = pathname === to || 
+    (to === '/admin' && pathname.startsWith('/admin'));
 
   return (
-    <Link to={to}>
+    <Link href={to}>
       <motion.div
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -110,12 +111,12 @@ interface MobileNavButtonProps extends NavButtonProps {
 }
 
 const MobileNavButton: React.FC<MobileNavButtonProps> = ({ to, label, icon, onClick }) => {
-  const location = useLocation();
-  const isActive = location.pathname === to || 
-    (to === '/admin' && location.pathname.startsWith('/admin'));
+  const pathname = usePathname();
+  const isActive = pathname === to || 
+    (to === '/admin' && pathname.startsWith('/admin'));
 
   return (
-    <Link to={to} onClick={onClick} className="block w-full">
+    <Link href={to} onClick={onClick} className="block w-full">
       <Button 
         variant={isActive ? "default" : "ghost"}
         className={cn(

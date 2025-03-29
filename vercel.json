@@ -1,14 +1,17 @@
 {
   "version": 2,
   "buildCommand": "npm run build",
-  "framework": "nextjs",
+  "devCommand": "npm run dev",
   "installCommand": "npm install",
   "outputDirectory": ".next",
+  "framework": "nextjs",
+  "regions": ["gru1"],
   "env": {
     "NEXT_PUBLIC_SUPABASE_URL": "https://iqbqfgwxvjlxzqxvvqxc.supabase.co",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxYnFmZ3d4dmpseHpxeHZ2cXhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE0NzU1NzAsImV4cCI6MjAyNzA1MTU3MH0.Gy-TGkOYK4mnpAMdjXyXkYZYXKQV_W2EQRZ3oCeBJ8k",
     "SUPABASE_SERVICE_ROLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxYnFmZ3d4dmpseHpxeHZ2cXhjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMTQ3NTU3MCwiZXhwIjoyMDI3MDUxNTcwfQ.Gy-TGkOYK4mnpAMdjXyXkYZYXKQV_W2EQRZ3oCeBJ8k",
     "SUPABASE_JWT_SECRET": "prj_e3veMTl1O0R4XE61ZDgw4spVfrZi",
-    "NEXTAUTH_SECRET": "e3veMTl1O0R4XE61ZDgw4spVfrZi"
+    "NEXTAUTH_SECRET": "e3veMTl1O0R4XE61ZDgw4spVfrZi",
+    "NEXT_PUBLIC_SITE_URL": "@site_url"
   }
 }

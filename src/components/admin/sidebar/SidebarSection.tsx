@@ -3,7 +3,7 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { SidebarSection as SidebarSectionType } from '@/types/admin-sidebar';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation'
 
 interface SidebarSectionProps {
   section: SidebarSectionType;
@@ -22,7 +22,7 @@ const SidebarSection = ({
   toggleSection,
   setActiveTab
 }: SidebarSectionProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const isExpanded = expandedSection === section.id;
   
   const handleTabClick = (tabId: string) => {
@@ -30,15 +30,15 @@ const SidebarSection = ({
     
     // Navigate to the appropriate route
     if (tabId === 'profile') {
-      navigate('/secure/profile');
+      router.push('/secure/profile');
     } else if (tabId === 'notifications') {
-      navigate('/secure/notifications');
+      router.push('/secure/notifications');
     } else if (tabId === 'clients') {
-      navigate('/secure/clients');
+      router.push('/secure/clients');
     } else if (tabId === 'dashboard') {
-      navigate('/secure/dashboard');
+      router.push('/secure/dashboard');
     } else {
-      navigate(`/secure/${tabId}`);
+      router.push(`/secure/${tabId}`);
     }
   };
 

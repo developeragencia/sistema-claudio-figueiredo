@@ -1,41 +1,28 @@
-'use client';
+'use client'
 
-import { Inter } from 'next/font/google';
-import { Toaster } from 'sonner';
-import { NavBar } from '@/components/NavBar';
-import { ThemeProvider } from '@/components/ThemeProvider';
-import { QueryProvider } from '@/components/QueryProvider';
-import './globals.css';
+import './globals.css'
+import { Inter } from 'next/font/google'
+import { AuthProvider } from './contexts/auth'
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata = {
+  title: 'Secure Bridge Connect',
+  description: 'Sistema de gestão de documentos e processos',
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
+    <html lang="pt-BR">
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <QueryProvider>
-            <div className="flex h-screen">
-              <div className="w-64 flex-shrink-0">
-                <NavBar />
-              </div>
-              <div className="flex-1 overflow-auto">
-                {children}
-              </div>
-            </div>
-            <Toaster richColors position="top-right" />
-          </QueryProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
-  );
+  )
 } 

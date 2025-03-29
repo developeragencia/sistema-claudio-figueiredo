@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams  } from "@/hooks/use-router";
 import AdminLayout from '@/components/admin/AdminLayout';
 import ClientDetailView from '@/components/admin/tax-credits/components/client/ClientDetailView';
 

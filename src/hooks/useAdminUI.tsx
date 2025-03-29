@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation  } from "@/hooks/use-router";
 
 export const useAdminUI = () => {
   // Get the current route path

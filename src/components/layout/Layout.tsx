@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet  } from "@/hooks/use-router";
 import Navigation from './Navigation';
 import { NotificationCenter } from '@/components/notifications/NotificationCenter';
 

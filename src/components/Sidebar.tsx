@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link  } from "@/hooks/use-router";
 import { LayoutDashboard, Users, FileText, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
 

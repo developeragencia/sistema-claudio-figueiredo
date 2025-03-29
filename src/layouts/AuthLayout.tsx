@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet  } from "@/hooks/use-router";
 import { Logo } from '@/components/Logo';
 
 export function AuthLayout() {

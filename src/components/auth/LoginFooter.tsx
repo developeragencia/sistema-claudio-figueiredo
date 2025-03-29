@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link  } from "@/hooks/use-router";
 import { Button } from '@/components/ui/button';
 import { Home } from 'lucide-react';
 

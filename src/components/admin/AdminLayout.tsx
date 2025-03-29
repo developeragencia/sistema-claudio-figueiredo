@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from "next/navigation";
 import AdminHeader from './AdminHeader';
 import AdminSidebar from './AdminSidebar';
 import AdminMobileNav from './AdminMobileNav';
@@ -15,7 +14,7 @@ interface AdminLayoutProps {
 }
 
 const AdminLayout = ({ activeTab: initialActiveTab, children }: AdminLayoutProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -72,13 +71,13 @@ const AdminLayout = ({ activeTab: initialActiveTab, children }: AdminLayoutProps
     
     // Navigate to specific routes
     if (tab === 'profile') {
-      navigate('/admin/profile');
+      router.push('/admin/profile');
     } else if (tab === 'notifications') {
-      navigate('/admin/notifications');
+      router.push('/admin/notifications');
     } else if (tab === 'clients') {
-      navigate('/admin/clients');
+      router.push('/admin/clients');
     } else {
-      navigate(`/admin/${tab}`);
+      router.push(`/admin/${tab}`);
     }
   };
   
@@ -94,7 +93,7 @@ const AdminLayout = ({ activeTab: initialActiveTab, children }: AdminLayoutProps
     });
     
     // Redirect to login page
-    navigate('/login');
+    router.push('/login');
   };
   
   return (

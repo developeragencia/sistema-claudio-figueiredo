@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link  } from "@/hooks/use-router";
 import AnimatedLogo from './AnimatedLogo';
 
 const Footer: React.FC = () => {

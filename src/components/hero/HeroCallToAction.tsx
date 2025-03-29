@@ -2,7 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link  } from "@/hooks/use-router";
 import { ArrowRight } from 'lucide-react';
 import { useAnimationOnScroll } from '@/hooks/useAnimationOnScroll';
 

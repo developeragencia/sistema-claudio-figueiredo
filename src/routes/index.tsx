@@ -1,5 +1,5 @@
 import { lazy } from 'react'
-import { RouteObject } from 'react-router-dom'
+import { RouteObject  } from "@/hooks/use-router"
 import ProtectedRoute from '@/components/ProtectedRoute'
 import MainLayout from '@/layouts/MainLayout'
 import AuthLayout from '@/layouts/AuthLayout'

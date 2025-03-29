@@ -1,79 +1,96 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { api } from '@/lib/api';
-import { toast } from 'sonner';
-import { AuthContextType, User } from '@/types/auth';
+'use client';
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
+import { createClient } from '@/lib/supabase-client';
+import { useToast } from '@/components/ui/use-toast';
+import { User } from '@supabase/supabase-js';
+import { useAuth as useSupabaseAuth } from '@/hooks/use-auth';
+
+type AuthContextType = ReturnType<typeof useSupabaseAuth>;
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
-  const navigate = useNavigate();
+  const auth = useSupabaseAuth();
+  const router = useRouter();
+  const { toast } = useToast();
+  const supabase = createClient();
 
   useEffect(() => {
-    const token = localStorage.getItem('@secure-bridge:token');
-    
-    if (token) {
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
-      api.get('/me')
-        .then(response => {
-          setUser(response.data);
-          setIsAuthenticated(true);
-        })
-        .catch(() => {
-          logout();
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else {
-      setIsAuthenticated(false);
-      setUser(null);
-      setIsLoading(false);
-    }
-  }, []);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (session) {
+          auth.user = session.user;
+        } else {
+          auth.user = null;
+        }
+        auth.loading = false;
+      }
+    );
 
-  const login = async (email: string, password: string) => {
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [auth.user, auth.loading, supabase.auth]);
+
+  const signIn = async (email: string, password: string) => {
     try {
-      const response = await api.post('/sessions', {
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      const { token, user: userData } = response.data;
+      if (error) {
+        throw error;
+      }
 
-      localStorage.setItem('@secure-bridge:token', token);
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-      setUser(userData);
-      setIsAuthenticated(true);
-      navigate('/dashboard');
-      toast.success('Login realizado com sucesso!');
-    } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      toast.error('Email ou senha inválidos');
+      if (data.user) {
+        auth.user = data.user;
+        router.push('/dashboard');
+        toast({
+          title: "Sucesso",
+          description: "Login realizado com sucesso!",
+        });
+      }
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Erro",
+        description: error.message || "Erro ao fazer login",
+      });
       throw error;
     }
   };
 
-  const logout = async () => {
-    localStorage.removeItem('@secure-bridge:token');
-    api.defaults.headers.common['Authorization'] = '';
-    setUser(null);
-    setIsAuthenticated(false);
-    navigate('/');
-    toast.success('Logout realizado com sucesso!');
+  const signOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) {
+        throw error;
+      }
+
+      auth.user = null;
+      router.push('/login');
+      toast({
+        title: "Sucesso",
+        description: "Logout realizado com sucesso!",
+      });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Erro",
+        description: error.message || "Erro ao fazer logout",
+      });
+      throw error;
+    }
   };
 
-  const value: AuthContextType = {
-    isAuthenticated,
-    isLoading,
-    user,
-    login,
-    logout
+  const value = {
+    ...auth,
+    signIn,
+    signOut,
   };
 
   return (
@@ -85,10 +102,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
-
   return context;
 }

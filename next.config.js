@@ -4,7 +4,6 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: ['localhost'],
-    unoptimized: false,
   },
   typescript: {
     ignoreBuildErrors: true,

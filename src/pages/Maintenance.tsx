@@ -3,7 +3,7 @@ import AnimatedLogo from '@/components/AnimatedLogo';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Construction, Wrench, Timer, ArrowRight, RefreshCcw, Clock, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from "@/hooks/use-router";
 
 const Maintenance = () => {
   const navigate = useNavigate();
